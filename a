@@ -1,0 +1,223 @@
+class Vikingo {
+	
+	var claseSocial = jarl
+	var botin = 0
+
+	method puedeExcursion(expedicion){
+		if(!self.estaAutorizado()){
+		
+		error.throwWithMessage("No puede ir de expedición")
+	}
+		else {
+		
+		expedicion.completarExpedicion()
+		botin = expedicion.retribuirVikingo()}
+	}
+	
+	method estaAutorizado(){
+		return claseSocial.puedeSubirE(self) and self.esProductivo()
+	}
+	
+	method esProductivo()
+	
+	
+	method ascender(){
+		
+		claseSocial.ascendete(self)	}
+	
+	method cambiarClase(nueva){
+		
+		claseSocial=nueva
+	}
+		
+	method ascendio()
+
+}
+
+
+
+class Expedicion {
+	
+ var lugares = []
+ var cantVikingos = 0
+
+
+ 	method valenLaPena(){
+		return lugares.forEach{lugar => lugar.valeLaPena(self)}
+		
+	}
+	
+	method cambiarCantidadVikingos(cant){
+		cantVikingos = cant
+	}
+	
+	method completarExpedicion(){		
+		return sum.lugares.forEach{lugar => lugar.botinGanado()}
+	}
+	
+	method invadir(){
+		return lugares.forEach{lugar => lugar.botinGanado()}
+	}
+	
+	method cantVikingos(){
+		return cantVikingos
+	}
+	
+	method capturarBotin(){
+		 
+		return self.completarExpedicion()
+	}
+	
+	method retribuirVikingo(){
+		return self.capturarBotin() / cantVikingos 
+	}
+	
+	
+	
+	
+	
+}
+
+
+
+class Capital{
+	var cantDerrotados = 0
+	
+	method valeLaPena(expedicion){
+		return self.botinPorVikingo(expedicion) / 3 >= 1
+	
+	}
+	
+	method botinPorVikingo(expedicion){
+		return self.botinGanado()/ expedicion.cantVikingos()
+		}
+	
+	method botinGanado(){
+		return cantDerrotados
+		
+	}
+	
+	method cantidadAfectada(expedicion){
+		
+		cantDerrotados = expedicion.cantVikingos()
+	}
+	
+	
+}
+
+class Aldeas {
+	var cantCrucifijos
+	
+	 method valeLaPena(expedicion)
+	{
+		return self.botinGanado() > 15
+		
+	}
+	
+	method botinGanado(){
+		return cantCrucifijos
+		
+	}
+	
+}
+
+class AldeasAmuralladas inherits Aldeas {
+	var cantMinima= 1
+	
+	override method valeLaPena(expedicion){
+		return super(expedicion) and self.comitivaSuficiente(expedicion)
+	}
+	method comitivaSuficiente(expedicion){
+		return expedicion.cantVikingos() > cantMinima
+	}
+	
+}
+
+
+class Soldado inherits Vikingo{
+	var vidasCobradas = 0
+	var property cantArmas = 0
+	
+	
+	override method esProductivo(){
+		return vidasCobradas>20 and not self.estaDesarmado()
+	}
+	
+	override method ascendio(){
+		self.cambiarArmas(10)
+	}
+	
+	
+	method cambiarArmas(cant){
+		cantArmas=cant
+	}
+	
+		
+	method estaDesarmado(){
+		 cantArmas = 0 }
+	
+}
+
+class Granjero inherits Vikingo{
+		var cantHijos 
+		var cantHectareas
+	
+	override method esProductivo(){
+		
+	return	cantHectareas/cantHijos >= 2 }	
+	
+	override method ascendio() {
+		
+		self.aumentarHijos(2)
+		self.aumentarHectareas(2)	}
+	
+	method aumentarHijos(cant){
+	
+		cantHijos+=cant	}
+	
+	method aumentarHectareas(cant){
+		
+		cantHectareas+=cant	}
+	
+}
+
+
+object jarl {
+
+
+	method ascender(vikingo){
+	
+	 vikingo.cambiarClase(karl)
+	 vikingo.ascendio()}	
+
+	method puedeSubirE(vikingo){
+		return vikingo.estaDesarmado()	}
+	
+}
+
+
+object karl {
+	
+	method ascender(vikingo){
+		vikingo.cambiarClase(thrall)
+		
+	}
+	method puedeSubirE(){		
+		return true	}	
+}
+
+object thrall {
+	
+	method ascender(vikingo)
+	{ 	}
+	
+	method puedeSubirE(){
+
+		return true	}
+	
+}
+
+
+
+
+
